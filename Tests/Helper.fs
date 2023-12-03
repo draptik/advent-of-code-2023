@@ -1,6 +1,7 @@
+[<RequireQualifiedAccess>]
 module Helper
 
-let ReadSample filename =
+let readSample filename =
     System.IO.File.ReadAllLines filename |> Seq.ofArray
 
 let charsToString : char seq -> string =

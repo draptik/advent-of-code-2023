@@ -1,6 +1,5 @@
 module Day1
 
-open Helper
 open System
 open Swensen.Unquote
 open Xunit
@@ -26,7 +25,7 @@ let parseLine (line: string) : string =
     let getLastDigit (input: string) : string =
         input
         |> Seq.rev
-        |> charsToString
+        |> Helper.charsToString
         |> getFirstDigit
 
     let firstDigit = getFirstDigit line
@@ -66,7 +65,7 @@ let ``Creating the sum of numbers as string works``() =
 [<Fact>]
 let ``Day 1 Sample Data``() =
     // Arrange
-    let input = ReadSample day01SampleDataFile
+    let input = Helper.readSample day01SampleDataFile
     
     // Act
     let actual =
@@ -81,7 +80,7 @@ let ``Day 1 Sample Data``() =
 [<Fact>]
 let ``Day 1 - Exercise 1``() =
     // Arrange
-    let input = ReadSample day01Exercise1File
+    let input = Helper.readSample day01Exercise1File
     
     // Act
     let actual =
