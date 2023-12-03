@@ -38,7 +38,7 @@ let parseLine (line: string) : string =
 [<InlineData("pqr3stu8vwx", "38")>]
 [<InlineData("a1b2c3d4e5f", "15")>]
 [<InlineData("treb7uchet", "77")>]
-let ``Parsing a single line works`` (input: string) (expected: string) =
+let ``Day 1 - Exercise 1 - Parsing a single line works`` (input: string) (expected: string) =
     let actual = parseLine input
     actual =! expected
 
@@ -49,7 +49,7 @@ let addNumbers (numbers: string seq) : string =
     |> string
 
 [<Fact>]
-let ``Creating the sum of numbers as string works``() =
+let ``Day 1 - Exercise 1 - Creating the sum of numbers as string works``() =
     // Arrange
     let one = "1"
     let two = "2"
@@ -63,7 +63,7 @@ let ``Creating the sum of numbers as string works``() =
     actual =! expected
 
 [<Fact>]
-let ``Day 1 Sample Data``() =
+let ``Day 1 - Exercise 1 - Sample Data``() =
     // Arrange
     let input = Helper.readSample day01SampleDataFile
     
@@ -78,7 +78,7 @@ let ``Day 1 Sample Data``() =
     actual =! expected
     
 [<Fact>]
-let ``Day 1 - Exercise 1``() =
+let ``Day 1 - Exercise 1 - Solution``() =
     // Arrange
     let input = Helper.readSample day01Exercise1File
     
@@ -90,4 +90,17 @@ let ``Day 1 - Exercise 1``() =
     
     // Assert
     let expected = "54927"
+    actual =! expected
+
+
+[<Theory(Skip = "TODO")>]
+[<InlineData("two1nine", "29")>]
+[<InlineData("eightwothree", "83")>]
+[<InlineData("abcone2threexyz", "13")>]
+[<InlineData("xtwone3four", "24")>]
+[<InlineData("4nineeightseven2", "42")>]
+[<InlineData("zoneight234", "14")>]
+[<InlineData("7pqrstsixteen", "76")>]
+let ``Day 1 - Exercise 2 - Parsing a single line works`` (input: string) (expected: string) =
+    let actual = parseLine input
     actual =! expected
