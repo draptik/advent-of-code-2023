@@ -16,7 +16,8 @@ module Exercise1 =
 
         let rec getFirstDigit (input: string) : string =
             match input with
-            | "" -> ""
+            | "" ->
+                ""
             | _ ->
                 let firstChar = input[0]
                 if Char.IsDigit firstChar then
@@ -95,7 +96,84 @@ module Exercise1 =
         actual =! expected
 
 module Exercise2 =
+    
+    [<Literal>]
+    let one = "one"
+    [<Literal>]
+    let two = "two"
+    [<Literal>]
+    let three = "three"
+    [<Literal>]
+    let four = "four"
+    [<Literal>]
+    let five = "five"
+    [<Literal>]
+    let six = "six"
+    [<Literal>]
+    let seven = "seven"
+    [<Literal>]
+    let eight = "eight"
+    [<Literal>]
+    let nine = "nine"
+    
+    let startingLetterDict =
+        [
+            one
+            two
+            three
+            four
+            five
+            six
+            seven
+            eight
+            nine
+        ]
+        |> Seq.groupBy (fun s -> s[0])
+        |> Map.ofSeq
+    
+    let spelledNumberToIntString =
+        Map [
+            one, "1"
+            two, "2"
+            three, "3"
+            four, "4"
+            five, "5"
+            six, "6"
+            seven, "7"
+            eight, "8"
+            nine, "9"
+        ]
+        
+    let tryMapSpelledNumberToIntString (input: string) : string option =
+        match input with
+        | "" ->
+            None
+        | _ ->
+            let firstChar = input[0]
+            match startingLetterDict.TryFind firstChar with
+            | Some values ->
+                if values |> Seq.contains input then
+                    match spelledNumberToIntString.TryFind input with
+                        | Some x -> Some x
+                        | None -> None
+                else
+                    None
+            | None -> None
 
+    [<Theory>]
+    [<InlineData("one", "1")>]
+    [<InlineData("two", "2")>]
+    [<InlineData("three", "3")>]
+    [<InlineData("four", "4")>]
+    [<InlineData("five", "5")>]
+    [<InlineData("six", "6")>]
+    [<InlineData("seven", "7")>]
+    [<InlineData("eight", "8")>]
+    [<InlineData("nine", "9")>]
+    let ``Plain string parsing - 1 to 9`` (input: string) (expected: string) =
+        let actual = tryMapSpelledNumberToIntString input
+        actual =! Some expected
+    
     [<Theory(Skip = "TODO")>]
     [<InlineData("two1nine", "29")>]
     [<InlineData("eightwothree", "83")>]
