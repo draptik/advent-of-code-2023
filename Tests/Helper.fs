@@ -1,8 +1,12 @@
 [<RequireQualifiedAccess>]
 module Helper
 
-let readSample filename =
-    System.IO.File.ReadAllLines filename |> Seq.ofArray
+open System
+open System.IO
 
-let charsToString : char seq -> string =
-    Seq.fold (fun acc c -> acc + (c |> string)) ""
+let readSample filename =
+    let inputPath = Path.Combine(__SOURCE_DIRECTORY__, "SampleData" , filename)  
+    File.ReadAllLines inputPath |> Seq.ofArray
+
+let charsToString (chars : char seq) : string =
+    String(chars |> Array.ofSeq)

@@ -9,15 +9,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="day01-sampledata.txt">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="day01-exercise1.txt">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
         <Compile Include="Helper.fs" />
         <Compile Include="Day1.fs" />
         <Compile Include="Program.fs"/>
+        <Content Include="SampleData\day01-exercise1-sampledata.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="SampleData\day01-exercise2-sampledata.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="SampleData\day01-data.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>

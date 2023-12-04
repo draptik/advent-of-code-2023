@@ -1,16 +1,17 @@
 module Day1
 
 open System
+open System.Text.RegularExpressions
 open Swensen.Unquote
 open Xunit
 
 module Exercise1 =
         
     [<Literal>]
-    let day01Exercise1SampleDataFile = "./day01-sampledata.txt"
+    let day01Exercise1SampleDataFile = "day01-exercise1-sampledata.txt"
 
     [<Literal>]
-    let day01Exercise1File = "./day01-exercise1.txt"
+    let day01File = "day01-data.txt"
 
     let parseLine (line: string) : string =
 
@@ -83,7 +84,7 @@ module Exercise1 =
     [<Fact>]
     let ``Solution``() =
         // Arrange
-        let input = Helper.readSample day01Exercise1File
+        let input = Helper.readSample day01File
         
         // Act
         let actual =
@@ -95,86 +96,45 @@ module Exercise1 =
         let expected = "54927"
         actual =! expected
 
+/// Exercise 2: I tried to come up with a solution without regex, but failed :-(
+/// Original: https://github.com/geodanila/advent_of_code_2023/blob/main/day_1.fsx
 module Exercise2 =
     
     [<Literal>]
-    let one = "one"
-    [<Literal>]
-    let two = "two"
-    [<Literal>]
-    let three = "three"
-    [<Literal>]
-    let four = "four"
-    [<Literal>]
-    let five = "five"
-    [<Literal>]
-    let six = "six"
-    [<Literal>]
-    let seven = "seven"
-    [<Literal>]
-    let eight = "eight"
-    [<Literal>]
-    let nine = "nine"
+    let day01Exercise2SampleDataFile = "day01-exercise2-sampledata.txt"
     
-    let startingLetterDict =
-        [
-            one
-            two
-            three
-            four
-            five
-            six
-            seven
-            eight
-            nine
-        ]
-        |> Seq.groupBy (fun s -> s[0])
-        |> Map.ofSeq
+    [<Literal>]
+    let day01File = "day01-data.txt"
     
-    let spelledNumberToIntString =
-        Map [
-            one, "1"
-            two, "2"
-            three, "3"
-            four, "4"
-            five, "5"
-            six, "6"
-            seven, "7"
-            eight, "8"
-            nine, "9"
-        ]
+    let complexDigitRegex = @"(\d|one|two|three|four|five|six|seven|eight|nine)"
+
+    let getDigitValue (digit: string) =
+        match digit.ToLower() with
+        | "one" -> 1
+        | "two" -> 2
+        | "three" -> 3
+        | "four" -> 4
+        | "five" -> 5
+        | "six" -> 6
+        | "seven" -> 7
+        | "eight" -> 8
+        | "nine" -> 9
+        | _ -> digit |> int
         
-    let tryMapSpelledNumberToIntString (input: string) : string option =
-        match input with
-        | "" ->
-            None
-        | _ ->
-            let firstChar = input[0]
-            match startingLetterDict.TryFind firstChar with
-            | Some values ->
-                if values |> Seq.contains input then
-                    match spelledNumberToIntString.TryFind input with
-                        | Some x -> Some x
-                        | None -> None
-                else
-                    None
-            | None -> None
+    let findDigit (line: string) regex =
+        let digit = Regex.Match(line, regex).Value
+        getDigitValue digit
+        
+    let findLastDigit (line: string) regex =
+        let lastDigit = Regex.Match(line, regex, RegexOptions.RightToLeft).Value
+        getDigitValue lastDigit
+    
+    let getFirstAndLastDigits regex (line: string) : (int * int) =
+        let firstDigit = findDigit line regex
+        let lastDigit = findLastDigit line regex
+        (firstDigit, lastDigit)   
 
     [<Theory>]
-    [<InlineData("one", "1")>]
-    [<InlineData("two", "2")>]
-    [<InlineData("three", "3")>]
-    [<InlineData("four", "4")>]
-    [<InlineData("five", "5")>]
-    [<InlineData("six", "6")>]
-    [<InlineData("seven", "7")>]
-    [<InlineData("eight", "8")>]
-    [<InlineData("nine", "9")>]
-    let ``Plain string parsing - 1 to 9`` (input: string) (expected: string) =
-        let actual = tryMapSpelledNumberToIntString input
-        actual =! Some expected
-    
-    [<Theory(Skip = "TODO")>]
     [<InlineData("two1nine", "29")>]
     [<InlineData("eightwothree", "83")>]
     [<InlineData("abcone2threexyz", "13")>]
@@ -182,5 +142,34 @@ module Exercise2 =
     [<InlineData("4nineeightseven2", "42")>]
     [<InlineData("zoneight234", "14")>]
     [<InlineData("7pqrstsixteen", "76")>]
-    let ``Parsing a single line works`` (input: string) (expected: string) =
-        "TODO" =! expected
+    let ``Replace spelled string with ascii string`` (input: string) (expected: string) =
+        let actual =
+            input
+            |> getFirstAndLastDigits complexDigitRegex
+            |> fun (first, last) -> first.ToString() + last.ToString()
+        
+        actual =! expected
+    
+    [<Fact>]
+    let ``Sample Data`` () =
+        let actual =
+            day01Exercise2SampleDataFile
+            |> Helper.readSample
+            |> Seq.map (getFirstAndLastDigits complexDigitRegex)
+            |> Seq.map (fun (first, last) -> first * 10 + last)
+            |> Seq.sum
+        
+        let expected = 281
+        actual =! expected
+   
+    [<Fact>]
+    let ``Solution`` () =
+        let actual =
+            day01File
+            |> Helper.readSample
+            |> Seq.map (getFirstAndLastDigits complexDigitRegex)
+            |> Seq.map (fun (first, last) -> first * 10 + last)
+            |> Seq.sum
+        
+        let expected = 54581
+        actual =! expected
