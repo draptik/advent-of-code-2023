@@ -12,6 +12,7 @@
         <Compile Include="Helper.fs" />
         <Compile Include="Day1.fs" />
         <Compile Include="Day2.fs" />
+        <Compile Include="Day3.fs" />
         <Compile Include="Program.fs"/>
         <Content Include="SampleData\day01-exercise1-sampledata.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -26,6 +27,12 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Include="SampleData\day02-data.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="SampleData\day03-exercise1-sampledata.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="SampleData\day03-data.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
