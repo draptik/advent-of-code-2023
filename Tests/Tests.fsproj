@@ -29,7 +29,7 @@
         <Content Include="SampleData\day02-data.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="SampleData\day03-exercise1-sampledata.txt">
+        <Content Include="SampleData\day03-sampledata.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Include="SampleData\day03-data.txt">
