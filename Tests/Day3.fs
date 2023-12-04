@@ -78,8 +78,6 @@ module Exercise1 =
         let expected = 509115
         actual =! expected
         
-open Exercise1
-
 module Exercise2 =
         
     type PartNumber = { Number: int; X0: int; X1: int; Y: int }
